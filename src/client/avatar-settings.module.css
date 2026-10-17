@@ -1,0 +1,215 @@
+/* Chat avatars, rendered as a first-level settings page (settings.section). */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pageHead {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pageTitle {
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.pageDescription {
+  margin: 0;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pageBody {
+  margin-top: 16px;
+  border-top: 1px solid var(--dsw-alias-border-l2);
+}
+
+.sizeSection, .roleSection {
+  padding: 16px 0;
+}
+
+.sizeSection + .roleSection, .roleSection + .roleSection {
+  border-top: 1px solid var(--dsw-alias-border-l2);
+}
+
+.sizeHead, .roleHead, .uploadRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sizeHead > div, .roleHead > div {
+  flex: 1;
+}
+
+.roleTitle {
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.roleHint {
+  margin: 2px 0 0;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.reset, .uploadButton {
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  font: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
+}
+
+.reset {
+  padding: 4px 10px;
+}
+
+.reset:hover:not(:disabled), .uploadButton:hover {
+  border-color: var(--dsw-alias-label-dimmed);
+  color: var(--dsw-alias-label-primary);
+}
+
+.reset:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.reset:focus-visible, .choice:focus-visible, .uploadButton:focus-within, .sizeSlider:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 1px;
+}
+
+.sizeValue {
+  min-width: 48px;
+  color: var(--dsw-alias-label-primary);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.sizeSlider {
+  display: block;
+  width: 100%;
+  margin: 16px 0 0;
+  accent-color: var(--dsw-alias-brand-primary);
+  cursor: pointer;
+}
+
+.sizeRange {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.choice {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  padding: 3px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.choice[data-selected] {
+  border-color: var(--dsw-alias-brand-primary);
+}
+
+.portrait {
+  display: block;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.selected {
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  max-width: 72px;
+  padding: 1px 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--dsw-alias-brand-primary);
+  color: var(--dsw-alias-bg-base);
+  font-size: 9px;
+  line-height: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.uploadRow {
+  margin-top: 16px;
+}
+
+.uploadButton {
+  position: relative;
+  flex: none;
+  padding: 5px 12px;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fileHint {
+  min-width: 0;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.error {
+  margin: 8px 0 0;
+  color: var(--dsw-alias-label-error);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .sizeHead {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .sizeHead > div {
+    flex-basis: 100%;
+  }
+
+  .uploadRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

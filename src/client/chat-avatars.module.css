@@ -1,0 +1,96 @@
+/* Identity sits beside the native transcript. The plugin deliberately leaves
+   DSH's bubble, Markdown, code, tool and action chrome untouched. */
+
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind] {
+  box-sizing: border-box;
+}
+
+/* Assistant-owned rows share one content edge, including tools and turn-tail
+   actions. Only assistant prose receives a portrait. */
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind]:not([data-chat-flow-kind='user']) {
+  padding-left: calc(var(--dsh-chat-avatar-size, 72px) + 14px);
+}
+
+/* DSH folds finished steps with hidden="until-found", which Chromium renders
+   as content-visibility: hidden instead of display: none. The box stays in
+   flow, so a min-height here would leave one avatar-tall blank per folded
+   step. Only reserve portrait height on visible rows. */
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='assistant-step']:not([hidden]),
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user']:not([hidden]),
+:global(body[data-dsh-chat-avatars]) [data-chat-flow] > [data-pending-steering]:not([hidden]) {
+  position: relative;
+  min-height: var(--dsh-chat-avatar-size, 72px);
+}
+
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='assistant-step']::before,
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user']::after,
+:global(body[data-dsh-chat-avatars]) [data-chat-flow] > [data-pending-steering]::after {
+  position: absolute;
+  top: 0;
+  width: var(--dsh-chat-avatar-size, 72px);
+  height: var(--dsh-chat-avatar-size, 72px);
+  border: 2px solid color-mix(in srgb, var(--dsw-alias-bg-base, #fff) 88%, transparent);
+  /* Rounded-square portrait by default (matches the web variant); set
+     --dsh-chat-avatar-radius to 50% for the original circular portrait. */
+  border-radius: var(--dsh-chat-avatar-radius, 32%);
+  background-color: var(--dsw-alias-bg-layer-1, #f3f4f6);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+  content: '';
+  pointer-events: none;
+}
+
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='assistant-step']::before {
+  left: 0;
+  background-image: var(--dsh-chat-assistant-avatar);
+}
+
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user'] {
+  padding-right: 14px;
+  /* Nudge the whole row into the right margin: bubble and portrait move
+     together, so the portrait keeps hanging past the column edge with the same
+     bubble gap. Set --dsh-chat-avatar-shift to 0px for the flush alignment. */
+  transform: translateX(var(--dsh-chat-avatar-shift, 10px));
+}
+
+:global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user']::after,
+:global(body[data-dsh-chat-avatars]) [data-chat-flow] > [data-pending-steering]::after {
+  right: calc(-1 * var(--dsh-chat-avatar-size, 72px));
+  background-image: var(--dsh-chat-user-avatar);
+}
+
+:global(body[data-dsh-chat-avatars]) [data-chat-flow] > [data-pending-steering] {
+  box-sizing: border-box;
+  padding-right: 14px;
+}
+
+@media (max-width: 640px) {
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow-kind]:not([data-chat-flow-kind='user']) {
+    padding-left: calc(var(--dsh-chat-avatar-size, 72px) + 10px);
+  }
+
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user'] {
+    transform: none;
+  }
+
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user'],
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow] > [data-pending-steering] {
+    padding-right: calc(var(--dsh-chat-avatar-size, 72px) + 10px);
+  }
+}
+
+/* Not enough margin beside the transcript column to hang a portrait in:
+   fall back to the in-column layout so no ancestor clips it. */
+@media (max-width: 1080px) {
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user'],
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow] > [data-pending-steering] {
+    padding-right: calc(var(--dsh-chat-avatar-size, 72px) + 14px);
+  }
+
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow-kind='user']::after,
+  :global(body[data-dsh-chat-avatars]) [data-chat-flow] > [data-pending-steering]::after {
+    right: 0;
+  }
+}

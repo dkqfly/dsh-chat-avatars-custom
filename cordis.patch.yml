@@ -1,0 +1,4 @@
+# Chat-avatar bundle: inserts its browser-only row into the web plugin roster.
+- insert:
+    - id: ui-chat-avatars
+      name: '@linxin666/dsh-client-ui-chat-avatars-custom'
